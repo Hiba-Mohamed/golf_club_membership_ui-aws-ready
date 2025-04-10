@@ -58,17 +58,22 @@ const MembersPage = () => {
     // Validate phone number (must be in 000-000-0000 format)
     const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
     if (!phoneRegex.test(newMember.memberPhoneNumber)) {
-      newErrors.memberPhoneNumber = "Phone number must be in the format 000-000-0000.";
+      newErrors.memberPhoneNumber =
+        "Phone number must be in the format 000-000-0000.";
     }
 
     // Check for email uniqueness
-    const emailExists = members.some((member) => member.memberEmailAddress === newMember.memberEmailAddress);
+    const emailExists = members.some(
+      (member) => member.memberEmailAddress === newMember.memberEmailAddress
+    );
     if (emailExists) {
       newErrors.memberEmailAddress = "Email is already taken.";
     }
 
     // Check for phone number uniqueness
-    const phoneExists = members.some((member) => member.memberPhoneNumber === newMember.memberPhoneNumber);
+    const phoneExists = members.some(
+      (member) => member.memberPhoneNumber === newMember.memberPhoneNumber
+    );
     if (phoneExists) {
       newErrors.memberPhoneNumber = "Phone number is already in use.";
     }
@@ -91,7 +96,7 @@ const MembersPage = () => {
     console.log("New Member Before Submission:", newMember);
 
     try {
-      const response = await fetch("http://localhost:8080/api/members", {
+      const response = await fetch("http://54.174.225.43/api/members", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newMember),
@@ -123,7 +128,10 @@ const MembersPage = () => {
     <div className="participants-container">
       <h1>Members</h1>
 
-      <button className="member-toggle-form-btn" onClick={() => setShowForm(!showForm)}>
+      <button
+        className="member-toggle-form-btn"
+        onClick={() => setShowForm(!showForm)}
+      >
         {showForm ? "Hide Form" : "Add New Member"}
       </button>
 
@@ -153,8 +161,10 @@ const MembersPage = () => {
             onChange={handleInputChange}
             required
           />
-          {errors.memberEmailAddress && <p className="error">{errors.memberEmailAddress}</p>} {/* Display email error */}
-
+          {errors.memberEmailAddress && (
+            <p className="error">{errors.memberEmailAddress}</p>
+          )}{" "}
+          {/* Display email error */}
           <input
             type="text"
             name="memberPhoneNumber"
@@ -163,8 +173,10 @@ const MembersPage = () => {
             onChange={handleInputChange}
             required
           />
-          {errors.memberPhoneNumber && <p className="error">{errors.memberPhoneNumber}</p>} {/* Display phone number error */}
-
+          {errors.memberPhoneNumber && (
+            <p className="error">{errors.memberPhoneNumber}</p>
+          )}{" "}
+          {/* Display phone number error */}
           <label htmlFor="memberStartDate">Start Date</label>
           <input
             type="date"
@@ -174,7 +186,6 @@ const MembersPage = () => {
             onChange={handleInputChange}
             required
           />
-
           <button type="submit">Add Member</button>
         </form>
       )}

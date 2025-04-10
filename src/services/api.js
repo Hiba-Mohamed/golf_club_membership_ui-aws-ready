@@ -1,7 +1,7 @@
 export const getTournaments = async () => {
   try {
     const response = await fetch(
-      "http://localhost:8080/api/tournaments/allTournaments"
+      "http://54.174.225.43/api/tournaments/allTournaments"
     );
     if (!response.ok) {
       throw new Error("Failed to fetch tournaments");
@@ -14,7 +14,7 @@ export const getTournaments = async () => {
 export const getMembersInTournament = async (id) => {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/tournaments/getMembersInTournament/${id}`
+      `http://54.174.225.43/api/tournaments/getMembersInTournament/${id}`
     );
     if (!response.ok) {
       throw new Error("Failed to fetch members");
@@ -27,7 +27,9 @@ export const getMembersInTournament = async (id) => {
 };
 export const getTournamentByStartDate = async (tournamentStartDate) => {
   try {
-    const response = await fetch(`http://localhost:8080/api/tournaments/getTournamentByStartDate/${tournamentStartDate}`);
+    const response = await fetch(
+      `http://54.174.225.43/api/tournaments/getTournamentByStartDate/${tournamentStartDate}`
+    );
     if (response.ok) {
       return await response.json();
     } else {
@@ -40,7 +42,9 @@ export const getTournamentByStartDate = async (tournamentStartDate) => {
 };
 export const getTournamentByEndDate = async (tournamentEndDate) => {
   try {
-    const response = await fetch(`http://localhost:8080/api/tournaments/getTournamentByEndDate/${tournamentEndDate}`);
+    const response = await fetch(
+      `http://54.174.225.43/api/tournaments/getTournamentByEndDate/${tournamentEndDate}`
+    );
     if (response.ok) {
       return await response.json();
     } else {
@@ -53,7 +57,9 @@ export const getTournamentByEndDate = async (tournamentEndDate) => {
 };
 export const getTournamentByLocation = async (location) => {
   try {
-    const response = await fetch(`http://localhost:8080/api/tournaments/getTournamentByLocation/${location}`);
+    const response = await fetch(
+      `http://54.174.225.43/api/tournaments/getTournamentByLocation/${location}`
+    );
     if (response.ok) {
       return await response.json();
     } else {
@@ -66,9 +72,7 @@ export const getTournamentByLocation = async (location) => {
 };
 export const getMembers = async () => {
   try {
-    const response = await fetch(
-      "http://localhost:8080/api/members/allMembers"
-    );
+    const response = await fetch("http://54.174.225.43/api/members/allMembers");
     if (!response.ok) {
       throw new Error("Failed to fetch members");
     }
@@ -81,11 +85,9 @@ export const getMembers = async () => {
 
 export const getMemberById = async (id) => {
   try {
-  console.log("Id",id);
+    console.log("Id", id);
 
-    const response = await fetch(
-      `http://localhost:8080/api/members/${id}`
-    );
+    const response = await fetch(`http://54.174.225.43/api/members/${id}`);
     if (!response.ok) {
       throw new Error("Failed to fetch member by id");
     }
@@ -99,7 +101,7 @@ export const getMemberById = async (id) => {
 export const getMemberByName = async (name) => {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/members/name/${name}`
+      `http://54.174.225.43/api/members/name/${name}`
     );
     if (!response.ok) {
       throw new Error("Failed to fetch member by name");
@@ -114,7 +116,7 @@ export const getMemberByName = async (name) => {
 export const getMemberByAddress = async (address) => {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/members/getMemberByAddress/${address}`
+      `http://54.174.225.43/api/members/getMemberByAddress/${address}`
     );
     if (!response.ok) {
       throw new Error("Failed to fetch member by address");
@@ -129,7 +131,7 @@ export const getMemberByAddress = async (address) => {
 export const getMemberByPhoneNumber = async (phoneNumber) => {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/members/getMemberByPhoneNumber/${phoneNumber}`
+      `http://54.174.225.43/api/members/getMemberByPhoneNumber/${phoneNumber}`
     );
     if (!response.ok) {
       throw new Error("Failed to fetch member by phone number");
@@ -144,7 +146,7 @@ export const getMemberByPhoneNumber = async (phoneNumber) => {
 export const getMemberByEmailAddress = async (emailAddress) => {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/members/getMemberByEmailAddress/${emailAddress}`
+      `http://54.174.225.43/api/members/getMemberByEmailAddress/${emailAddress}`
     );
     if (!response.ok) {
       throw new Error("Failed to fetch member by email address");
@@ -159,7 +161,7 @@ export const getMemberByEmailAddress = async (emailAddress) => {
 export const getMemberByStartDate = async (startDate) => {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/members/getMemberByStartDate?startDate=${startDate}`
+      `http://54.174.225.43/api/members/getMemberByStartDate?startDate=${startDate}`
     );
     if (!response.ok) {
       throw new Error("Failed to fetch members by start date");
@@ -174,21 +176,21 @@ export const getMemberByStartDate = async (startDate) => {
 export const createMember = async (member) => {
   console.log("Submitting member:", member);
 
-    const response = await fetch("http://localhost:8080/api/members", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(member),
-    });
+  const response = await fetch("http://54.174.225.43/api/members", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(member),
+  });
 
-    console.log(response);
-    const responseBody = await response.text();
-    console.log("Server response:", responseBody);
-    if (response.status === 200){
-      return "Member successfully added"
-    }
-    if (!response.status === 200) {
-      return response.status;
-    }
+  console.log(response);
+  const responseBody = await response.text();
+  console.log("Server response:", responseBody);
+  if (response.status === 200) {
+    return "Member successfully added";
+  }
+  if (!response.status === 200) {
+    return response.status;
+  }
 };

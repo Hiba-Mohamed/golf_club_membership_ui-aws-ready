@@ -16,7 +16,7 @@ const TournamentsPage = () => {
     endDate: "",
     location: "",
     entryFee: "",
-    cashPrizeAmount: ""
+    cashPrizeAmount: "",
   });
 
   useEffect(() => {
@@ -39,7 +39,9 @@ const TournamentsPage = () => {
     const fetchMembers = async () => {
       setLoading(true);
       try {
-        const response = await fetch("http://localhost:8080/api/members/allMembers");
+        const response = await fetch(
+          "http://54.174.225.43/api/members/allMembers"
+        );
         const data = await response.json();
 
         console.log("Fetched Members:", data);
@@ -73,7 +75,7 @@ const TournamentsPage = () => {
       } else {
         setErrors((prevErrors) => ({
           ...prevErrors,
-          startDate: "",  // Clear the error
+          startDate: "", // Clear the error
         }));
       }
     }
@@ -90,7 +92,7 @@ const TournamentsPage = () => {
       } else {
         setErrors((prevErrors) => ({
           ...prevErrors,
-          endDate: "",  // Clear the error
+          endDate: "", // Clear the error
         }));
       }
     }
@@ -101,9 +103,9 @@ const TournamentsPage = () => {
     const { startDate, endDate } = newTournament;
     const newErrors = { ...errors };
     setTouchedFields((prevTouched) => ({
-        ...prevTouched,
-        [name]: true,
-      }));
+      ...prevTouched,
+      [name]: true,
+    }));
 
     if (name === "startDate") {
       if (!value) {
@@ -139,7 +141,10 @@ const TournamentsPage = () => {
       newErrors.location = "Location is required.";
     }
 
-    if ((name === "entryFee" || name === "cashPrizeAmount") && (!value || value < 0)) {
+    if (
+      (name === "entryFee" || name === "cashPrizeAmount") &&
+      (!value || value < 0)
+    ) {
       newErrors[name] = "Please enter a valid amount.";
     }
 
@@ -152,7 +157,8 @@ const TournamentsPage = () => {
     const newErrors = {};
 
     // Other validation logic (startDate, endDate, etc.)
-    const { startDate, endDate, location, entryFee, cashPrizeAmount } = newTournament;
+    const { startDate, endDate, location, entryFee, cashPrizeAmount } =
+      newTournament;
 
     if (!startDate) {
       newErrors.startDate = "Start date is required.";
@@ -164,12 +170,15 @@ const TournamentsPage = () => {
       }
     }
     if (!endDate) newErrors.endDate = "End date is required.";
-    else if (new Date(startDate) > new Date(endDate)) newErrors.endDate = "End date must not be earlier than the start date.";
+    else if (new Date(startDate) > new Date(endDate))
+      newErrors.endDate = "End date must not be earlier than the start date.";
 
     if (!location.trim()) newErrors.location = "Location is required.";
 
-    if (entryFee === "" || Number(entryFee) < 0) newErrors.entryFee = "Entry fee must be zero or more.";
-    if (cashPrizeAmount === "" || Number(cashPrizeAmount) < 0) newErrors.cashPrizeAmount = "Cash prize must be zero or more.";
+    if (entryFee === "" || Number(entryFee) < 0)
+      newErrors.entryFee = "Entry fee must be zero or more.";
+    if (cashPrizeAmount === "" || Number(cashPrizeAmount) < 0)
+      newErrors.cashPrizeAmount = "Cash prize must be zero or more.";
 
     // Validation for member selection
     if (selectedMembers.length === 0) {
@@ -204,7 +213,7 @@ const TournamentsPage = () => {
     console.log("Tournament Data Sent to Backend:", tournamentData);
 
     try {
-      const response = await fetch("http://localhost:8080/api/tournaments", {
+      const response = await fetch("http://54.174.225.43/api/tournaments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(tournamentData),
@@ -262,7 +271,10 @@ const TournamentsPage = () => {
     <div className="participants-container">
       <h1>Tournaments</h1>
 
-      <button className="toggle-form-btn" onClick={() => setShowForm(!showForm)}>
+      <button
+        className="toggle-form-btn"
+        onClick={() => setShowForm(!showForm)}
+      >
         {showForm ? "Hide Form" : "Add New Tournament"}
       </button>
 
@@ -292,7 +304,9 @@ const TournamentsPage = () => {
             placeholder="End Date"
             min={
               newTournament.startDate
-                ? new Date(new Date(newTournament.startDate).getTime() + 86400000)
+                ? new Date(
+                    new Date(newTournament.startDate).getTime() + 86400000
+                  )
                     .toISOString()
                     .split("T")[0]
                 : ""
@@ -328,23 +342,25 @@ const TournamentsPage = () => {
             placeholder="Cash Prize"
             required
           />
-          {errors.cashPrizeAmount&& <p className="error">{errors.cashPrizeAmount}</p>}
+          {errors.cashPrizeAmount && (
+            <p className="error">{errors.cashPrizeAmount}</p>
+          )}
 
           {/* Add Members Dropdown */}
           <div className="member-select">
-                <label>Add Members (max 5):</label>
-                <select onChange={handleMemberSelect}>
-                  <option value="">-- Select Member --</option>
-                  {allMembers.map((member) => (
-                    <option key={member.id} value={member.id}>
-                      {member.memberName}
-                    </option>
-                  ))}
-                </select>
-                {errors.selectedMembers && (
-                  <div className="error-message">{errors.selectedMembers}</div>
-                )}
-              </div>
+            <label>Add Members (max 5):</label>
+            <select onChange={handleMemberSelect}>
+              <option value="">-- Select Member --</option>
+              {allMembers.map((member) => (
+                <option key={member.id} value={member.id}>
+                  {member.memberName}
+                </option>
+              ))}
+            </select>
+            {errors.selectedMembers && (
+              <div className="error-message">{errors.selectedMembers}</div>
+            )}
+          </div>
           {/* Display Selected Members */}
           <div className="selected-members-display">
             <h3>Selected Members:</h3>
@@ -368,7 +384,8 @@ const TournamentsPage = () => {
 
       {loading ? (
         <p className="loading-message">
-          Hang on for a minute, we are working on getting the tournament info for you !!
+          Hang on for a minute, we are working on getting the tournament info
+          for you !!
         </p>
       ) : tournaments.length > 0 ? (
         <table className="tournament-table">
